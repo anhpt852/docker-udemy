@@ -3,20 +3,24 @@ kind: Deployment
 metadata:
   name: second-app-deployment
 spec:
+  replicas: 1
   selector:
-    matchLabels:
-      app: myapp
+    # matchLabels:
+    #   app: second-app
+    matchExpressions:
+      - { key: app, operator: In, values: [second-app] }
   template:
     metadata:
       labels:
-        app: myapp
+        app: second-app
     spec:
       containers:
-        - name: myapp
-          image: <Image>
-          resources:
-            limits:
-              memory: "128Mi"
-              cpu: "500m"
-          ports:
-            - containerPort: <Port>
+        - name: second-node
+          image: anhpt741/kub-first-app:2
+          imagePullPolicy: Always
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 8080
+            periodSeconds: 10
+            initialDelaySeconds: 5
