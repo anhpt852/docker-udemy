@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: story-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: story
+  template:
+    metadata:
+      labels:
+        app: story
+    spec:
+      containers:
+        - name: story
+          image: anhpt741/kub-data-demo:1
+          volumeMounts:
+            - mountPath: /app/story
+              name: story-volume
+          # resources:
+          #   limits:
+          #     memory: "128Mi"
+          #     cpu: "500m"
+          # ports:
+          #   - containerPort: <Port>
+      volumes:
+        - name: story-volume
+          emptyDir: {}
