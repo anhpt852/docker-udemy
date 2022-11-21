@@ -14,4 +14,9 @@ spec:
     spec:
       containers:
         - name: users
-          image: anhpt741/kub-demo-users
+          image: anhpt741/kub-demo-users:latest
+          env:
+            - name: AUTH_ADDRESS
+              # value: 10.99.104.252
+              # value: localhost
+              value: auth-service.default
